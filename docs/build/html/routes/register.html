@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>/api/register/ &#8212; Something  documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="/api/login/" href="login.html" />
+    <link rel="prev" title="/api/data_key/" href="data_key.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="api-register">
+<h1>/api/register/<a class="headerlink" href="#api-register" title="Permalink to this headline">¶</a></h1>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../limits.html"><span class="doc">Limits and conditions</span></a>, <a class="reference internal" href="data_key.html"><span class="doc">/api/data_key/</span></a>.</p>
+</div>
+<dl>
+<dt>Payload</dt><dd><dl>
+<dt>JSON</dt><dd><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;username&gt;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;encrypted with data_key&gt;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;private_key&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;user&#39;s generated private key&gt;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt>Response (200)</dt><dd><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;msg&quot;</span><span class="p">:</span> <span class="s2">&quot;User &lt;username&gt; was created.&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;access_token&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;jwt_access_token&gt;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;refresh_token&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;jwt_refresh_token&gt;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="section" id="example-request">
+<h2>Example request<a class="headerlink" href="#example-request" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Needed packages:</p>
+<ul class="simple">
+<li><p>requests</p></li>
+<li><p>cryptography</p></li>
+</ul>
+</div>
+<ol class="arabic simple">
+<li><p>Choose a reasonable secure password, pick a username.</p></li>
+<li><p>Run python script:</p></li>
+</ol>
+<blockquote>
+<div><script type="text/javascript">
+    function showhide(element){
+        if (!document.getElementById)
+            return
+
+        if (element.style.display == "block")
+            element.style.display = "none"
+        else
+            element.style.display = "block"
+    };
+</script>
+<a href="javascript:showhide(document.getElementById('hiddencodeblock2'))">+ show/hide code</a><br /><div id="hiddencodeblock2" style="display: block"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.backends</span> <span class="kn">import</span> <span class="n">default_backend</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">serialization</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">padding</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.serialization</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">load_pem_public_key</span>
+<span class="p">)</span>
+
+<span class="c1"># ! Read docs for the information:</span>
+<span class="c1"># https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa.html</span>
+
+<span class="k">def</span> <span class="nf">get_private_key</span><span class="p">():</span>
+  <span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span>
+    <span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span> <span class="n">key_size</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">default_backend</span><span class="p">()</span>
+  <span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">private_key</span>
+
+<span class="n">username</span> <span class="o">=</span> <span class="s2">&quot;your_username&quot;</span>  <span class="c1"># Minimum 2, maximum 32 chars.</span>
+<span class="n">password</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Your_secure_pa$$w0rd&quot;</span>
+
+<span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;http://localhost:5000/api&quot;</span>  <span class="c1"># Api host, must contain http/https.</span>
+
+<span class="c1"># Generating our private key.</span>
+<span class="n">our_private_key</span> <span class="o">=</span> <span class="n">get_private_key</span><span class="p">()</span>
+
+<span class="c1"># Then we encrypt it with our password.</span>
+<span class="n">our_pem_file</span> <span class="o">=</span> <span class="n">our_private_key</span><span class="o">.</span><span class="n">private_bytes</span><span class="p">(</span>
+  <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
+  <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PrivateFormat</span><span class="o">.</span><span class="n">TraditionalOpenSSL</span><span class="p">,</span>
+  <span class="n">encryption_algorithm</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">BestAvailableEncryption</span><span class="p">(</span><span class="n">password</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># Saving the key locally for later use.</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;my_private_key.pem&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">our_pem_file</span><span class="p">)</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">host</span> <span class="o">+</span> <span class="s2">&quot;/data_key/&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">username</span><span class="p">})</span>
+<span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">--- POST /data_key ---</span><span class="se">\n</span><span class="s1">Headers:&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Json:&quot;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+  <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;/data_key request returned non-200 status code.&quot;</span><span class="p">)</span>
+
+<span class="n">json_data</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">key_string</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">--- Data-key ---</span><span class="se">\n\n</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">key_string</span><span class="p">)</span>
+<span class="n">data_key</span> <span class="o">=</span> <span class="n">load_pem_public_key</span><span class="p">(</span><span class="n">key_string</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+<span class="n">encrypted_password</span> <span class="o">=</span> <span class="n">data_key</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
+  <span class="n">password</span><span class="p">,</span>
+  <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
+    <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA512</span><span class="p">()),</span>
+    <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA512</span><span class="p">(),</span>
+    <span class="n">label</span><span class="o">=</span><span class="kc">None</span>  <span class="c1"># Must be passed</span>
+  <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># We&#39;re base64 encoding password, because we can&#39;t transfer bytes in json.</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+  <span class="n">host</span> <span class="o">+</span> <span class="s2">&quot;/register/&quot;</span><span class="p">,</span>
+  <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">encrypted_password</span><span class="p">),</span>
+    <span class="s2">&quot;private_key&quot;</span><span class="p">:</span> <span class="n">our_pem_file</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">--- POST /register ---</span><span class="se">\n</span><span class="s1">Status code:&#39;</span><span class="p">,</span> <span class="n">r2</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">r2</span><span class="o">.</span><span class="n">content</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Json:&quot;</span><span class="p">,</span> <span class="n">r2</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</pre></div>
+</div>
+</div></div></blockquote>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>You have registered.</p></li>
+<li><p>You have <cite>access_token</cite> and <cite>refresh_token</cite> tokens.</p></li>
+<li><p>You have your encrypted private_key as pem file locally and in the database.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="example-script-response">
+<h2>Example script response<a class="headerlink" href="#example-script-response" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">--- Data-key ---</span>
+
+<span class="sd">  -----BEGIN PUBLIC KEY-----</span>
+<span class="sd">MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA15nHOKZ48ECHJ6nnebFq</span>
+<span class="sd">8OHr+K+h6jVKF7UD3uKHisFqToDssUuzM+3yI887e4UStH9yeQDeVFloyT5FY5ov</span>
+<span class="sd">SQU3dlATi+bYGzKq3dXpVJP+9XFq0q0QJCpVAy/eBM+9OPz/xhjrhvoUPrCGqSnO</span>
+<span class="sd">UC+psntW2WIdLTrfzGMpaZdyWRu5u9lIjrshLe2iqm81MdaUk+lvD1Y3wRntcZ5V</span>
+<span class="sd">cxQkZnvPoaAO4Pfb2nOyLFywGRwb09AglWHW2XW4rKE9glSX0rbj4GWiOB5CdlOe</span>
+<span class="sd">wTYE9CYHYxGgdoq/jS9NGwGr5uhR2pzc7HbgYxXC0yTTI8R1fogO8HhuUaT7flzo</span>
+<span class="sd">2mX+igPuyzARXMXyjhEzNyzFfHtFWO+ReX2ysCMBQyEjdHGSqhu6b6tJQIMYzg55</span>
+<span class="sd">w1Ci3OUd1a60AeipR1GcQl8A2twJHVPMEAkwKoF1lQQ4Y4fC7oc8++qBASJctcR7</span>
+<span class="sd">8gUmllr14DBx+jLwzkDqoS5ezIOYvIl9X08KJlSQAB7YRT7AbSSKFShlCf8F3FLK</span>
+<span class="sd">Ryp1UXX18PGJLZdXmmhngupA44UC4f88F8CikziS8SIZCvqZBoQiCurTNwjS0yg5</span>
+<span class="sd">y7vGTzoJOGftBatF62ljHYaDnuZzblMypWOwqI2C9OdiBS6xUllFbgp0Y6MF9Yzz</span>
+<span class="sd">GJZauxVaVV3DBTV5UIbftFkCAwEAAQ==</span>
+<span class="sd">-----END PUBLIC KEY-----</span>
+
+<span class="sd">  --- POST /register ---</span>
+<span class="sd">Status code: 200</span>
+
+<span class="sd">Json: {</span>
+<span class="sd">  &#39;access_token&#39;: &#39;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2Us&#39; \</span>
+<span class="sd">  &#39;ImlhdCI6MTYxNDgzNTI5MCwianRpIjoiNWIyNjMwNmYtN2JmNy00NTUzLTk3YzItYTI4ZTcwOD&#39; \</span>
+<span class="sd">  &#39;EzNGM0IiwibmJmIjoxNjE0ODM1MjkwLCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoieW91cl91c2Vy&#39; \</span>
+<span class="sd">  &#39;bmFtZSIsImV4cCI6MTYxNDgzNzA5MH0.Bc2Oz_-m8lARPIMRAiLje24tbIaVjcaxkSOhzuR8vgE&#39;,</span>
+<span class="sd">  &#39;msg&#39;: &#39;User your_username was created.&#39;,</span>
+<span class="sd">  &#39;refresh_token&#39;: &#39;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2Us&#39; \</span>
+<span class="sd">  &#39;ImlhdCI6MTYxNDgzNTI5MCwianRpIjoiOTM5ZGQwZTgtNjU2NC00NTM3LWE1MWEtMGI1ZTg3ZW&#39; \</span>
+<span class="sd">  M4ZWZlIiwibmJmIjoxNjE0ODM1MjkwLCJ0eXBlIjoicmVmcmVzaCIsInN1YiI6InlvdXJfdXNlc&#39; \</span>
+<span class="sd">  m5hbWUiLCJleHAiOjE2MTc0MjcyOTB9.eQZBeZ6V8S7QsqvHFmgYK4TVmLPZnjXEMAcTySkNHuU&#39;}</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Something</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../limits.html">Limits and conditions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">POST:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="data_key.html">/api/data_key/</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">/api/register/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="login.html">/api/login/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logout.html">/api/logout/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refresh_token.html">/api/refresh_token/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="start_conversation.html">/api/start_conversation/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="send_message.html">/api/send_message/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="update_settings.html">/api/update_settings/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ack.html">/api/ack/</a></li>
+</ul>
+<p class="caption"><span class="caption-text">GET:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="get_messages.html">/api/get_messages/</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Websockets:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notifications.html">/api/notifications/</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="data_key.html" title="previous chapter">/api/data_key/</a></li>
+      <li>Next: <a href="login.html" title="next chapter">/api/login/</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, x3m4k.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/routes/register.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

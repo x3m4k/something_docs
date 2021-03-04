@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>/api/data_key/ &#8212; Something  documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="/api/register/" href="register.html" />
+    <link rel="prev" title="Limits and conditions" href="../limits.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="api-data-key">
+<h1>/api/data_key/<a class="headerlink" href="#api-data-key" title="Permalink to this headline">¶</a></h1>
+<p>You’ll need to this key before you can send data (login/registration).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../limits.html"><span class="doc">Limits and conditions</span></a>, <a class="reference internal" href="register.html"><span class="doc">/api/register/</span></a>, <a class="reference internal" href="login.html"><span class="doc">/api/login/</span></a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Key is valid until specified date (the <code class="docutils literal notranslate"><span class="pre">until</span></code> field)!</p>
+</div>
+<dl>
+<dt>Payload</dt><dd><dl>
+<dt>JSON</dt><dd><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;your_username&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt>Response (200)</dt><dd><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;public_key&gt;&quot;</span><span class="p">,</span> <span class="nt">&quot;until&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;UTC date format: YYYY-mm-ddThh:mm:ssZ&gt;&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+<dt>Example response (200)</dt><dd><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN PUBLIC KEY-----</span>
+<span class="s2">MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAxwibJ7vrG8GS7HF+BM7I</span>
+<span class="s2">hAkma+5OCBcAUDW7QtwubLMh3or3u+/XMLOLdL80fmKmP7zn3w6XvujavFRMbvyN</span>
+<span class="s2">BtPW2vmBy4HbyLnS8xEETsc9pzpnbOoG1IGH8Cu9RrCoI0PCGQvkBW7Sws7lGZeL</span>
+<span class="s2">IXAgEZcj6Cxfi6bMPgEYX9NuvHyC40u060aUyNVkTdCA7ApjHgFvqGsiTiHS2CcG</span>
+<span class="s2">mqBt81wHgs9oSkA1tHnMJToiFtLOX6/agYp1eZEH9BtYBXQXAsqvwP3bsw9J/nL/</span>
+<span class="s2">+nwCN658YpyX8G5Y3t9AhvGZxMro2Bqhaxv1uaFQDKM5oZSstIZ8HhLieqgft6AR</span>
+<span class="s2">aUGF1tgRk8qqClNdEYWZIGC98wzl7BcnBqezpt3jQVTky6SIb+hbfYOeLFayvEkb</span>
+<span class="s2">mNeQ2yQqMSU29aelxPXZd4j2tpXj79GdC8tWrSC8xWThSlE5EWFiG+RHMfuLla63</span>
+<span class="s2">n4ixrkwvmOg4hnM2MFWJ1vHRG7Kysw8Axa5qd/pe878kXPKQZYjZyybj2Kue4Pc8</span>
+<span class="s2">OTYA2AzkI/oqIb41znY1/a8F06UHGfzSgCLlNP8i8iDd1rPBrqzaEQQy0f3LtFPb</span>
+<span class="s2">vnCtBF5wDGP4wmRW8K5Js/1W+pkA59lRh/xkTUmjLXvH11tUbSw/FSGx4EMGW2dq</span>
+<span class="s2">p2QupviHmuKQ8sqjJdvRlnECAwEAAQ==</span>
+<span class="s2">-----END PUBLIC KEY-----&quot;</span><span class="p">,</span> <span class="nt">&quot;until&quot;</span><span class="p">:</span> <span class="s2">&quot;2021-03-04T05:06:29Z&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Something</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../limits.html">Limits and conditions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">POST:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">/api/data_key/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="register.html">/api/register/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="login.html">/api/login/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logout.html">/api/logout/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="refresh_token.html">/api/refresh_token/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="start_conversation.html">/api/start_conversation/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="send_message.html">/api/send_message/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="update_settings.html">/api/update_settings/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ack.html">/api/ack/</a></li>
+</ul>
+<p class="caption"><span class="caption-text">GET:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="get_messages.html">/api/get_messages/</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Websockets:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notifications.html">/api/notifications/</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../limits.html" title="previous chapter">Limits and conditions</a></li>
+      <li>Next: <a href="register.html" title="next chapter">/api/register/</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, x3m4k.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/routes/data_key.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

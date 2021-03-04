@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Limits and conditions &#8212; Something  documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="/api/data_key/" href="routes/data_key.html" />
+    <link rel="prev" title="Welcome to Something’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="limits-and-conditions">
+<h1>Limits and conditions<a class="headerlink" href="#limits-and-conditions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="post">
+<h2>POST<a class="headerlink" href="#post" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="routes/data_key.html"><span class="doc">/api/data_key/</span></a> <code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">per</span> <span class="pre">60</span> <span class="pre">minutes</span></code></p></li>
+<li><p><a class="reference internal" href="routes/register.html"><span class="doc">/api/register/</span></a> <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">per</span> <span class="pre">1</span> <span class="pre">minute,</span> <span class="pre">10</span> <span class="pre">per</span> <span class="pre">30</span> <span class="pre">minutes</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>the amount of characters of the username must be 2 &lt; x &lt;= 32</p></li>
+<li><p>the username can’t contain spaces and dots</p></li>
+<li><dl class="simple">
+<dt>the password must contain at least:</dt><dd><ul>
+<li><p>10 characters</p></li>
+<li><p>upper-case and lower-case letters</p></li>
+<li><p>one digit</p></li>
+<li><p>one special character <code class="docutils literal notranslate"><span class="pre">!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?&#64;[\]^_`{|}~</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>the amount of characters of the password must be &lt;= 128</p></li>
+<li><p>the password can’t contain non-ascii characters</p></li>
+</ul>
+</div>
+<ul class="simple">
+<li><p><a class="reference internal" href="routes/login.html"><span class="doc">/api/login/</span></a> <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">per</span> <span class="pre">minute,</span> <span class="pre">10</span> <span class="pre">per</span> <span class="pre">30</span> <span class="pre">minutes</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the password must be encrypted.</p>
+</div>
+<ul class="simple">
+<li><p><a class="reference internal" href="routes/logout.html"><span class="doc">/api/logout/</span></a> <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">per</span> <span class="pre">minute</span></code></p></li>
+<li><p><a class="reference internal" href="routes/refresh_token.html"><span class="doc">/api/refresh_token/</span></a> <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">per</span> <span class="pre">minute</span></code></p></li>
+<li><p><a class="reference internal" href="routes/start_conversation.html"><span class="doc">/api/start_conversation/</span></a> <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">per</span> <span class="pre">15</span> <span class="pre">minutes</span></code></p></li>
+<li><p><a class="reference internal" href="routes/send_message.html"><span class="doc">/api/send_message/</span></a> <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">per</span> <span class="pre">1</span> <span class="pre">second</span></code></p></li>
+<li><p><a class="reference internal" href="routes/update_settings.html"><span class="doc">/api/update_settings/</span></a> <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">per</span> <span class="pre">1</span> <span class="pre">minute</span></code></p></li>
+<li><p><a class="reference internal" href="routes/ack.html"><span class="doc">/api/ack/</span></a> <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">per</span> <span class="pre">second</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="get">
+<h2>GET<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="routes/get_messages.html"><span class="doc">/api/get_messages/</span></a> <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">per</span> <span class="pre">1</span> <span class="pre">minute</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="websockets">
+<h2>Websockets<a class="headerlink" href="#websockets" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="routes/notifications.html"><span class="doc">/api/notifications/</span></a> <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">listeners</span> <span class="pre">per</span> <span class="pre">user</span></code></p></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Something</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Limits and conditions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#post">POST</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get">GET</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#websockets">Websockets</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">POST:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="routes/data_key.html">/api/data_key/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/register.html">/api/register/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/login.html">/api/login/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/logout.html">/api/logout/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/refresh_token.html">/api/refresh_token/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/start_conversation.html">/api/start_conversation/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/send_message.html">/api/send_message/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/update_settings.html">/api/update_settings/</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/ack.html">/api/ack/</a></li>
+</ul>
+<p class="caption"><span class="caption-text">GET:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="routes/get_messages.html">/api/get_messages/</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Websockets:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="routes/notifications.html">/api/notifications/</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Something’s documentation!</a></li>
+      <li>Next: <a href="routes/data_key.html" title="next chapter">/api/data_key/</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, x3m4k.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/limits.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
