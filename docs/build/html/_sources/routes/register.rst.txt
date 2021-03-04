@@ -32,8 +32,7 @@ Example request
 
 1. Choose a reasonable secure password, pick a username.
 2. Run python script:
-  .. hidden-code-block:: python
-    :starthidden: False
+  .. code-block:: python
 
     import base64
     import requests

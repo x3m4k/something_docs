@@ -34,8 +34,7 @@ Example request
   - requests
   - secrets
   - cryptography
-.. hidden-code-block:: python
-  :starthidden: False
+.. code-block:: python
 
   import requests
   import base64
