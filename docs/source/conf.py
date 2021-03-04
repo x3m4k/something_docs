@@ -28,7 +28,6 @@ author = 'x3m4k'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-	'hidden_code_block'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

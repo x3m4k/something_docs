@@ -46,8 +46,7 @@ Example request
   - requests
   - cryptography
 
-.. hidden-code-block:: python
-  :starthidden: False
+.. code-block:: python
 
   import requests
   import base64
