@@ -5,9 +5,9 @@
 
 Payload
   Headers
-  .. code-block:: json
+    .. code-block:: json
 
-    {"Authorization": "Bearer <access_token>"}
+      {"Authorization": "Bearer <access_token>"}
 
   JSON
     .. code-block:: json
