@@ -9,7 +9,7 @@ Payload
   Headers
     .. code-block:: json
 
-      {"Authorization": "Bearer <refresh_token>"}
+      {"Authorization": "Bearer <access_token>"}
   JSON
     .. code-block:: json
 
